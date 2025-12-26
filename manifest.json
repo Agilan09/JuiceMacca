@@ -1,0 +1,7 @@
+{
+"name": "Juice Macha Sales",
+"short_name": "Sales",
+"start_url": "/",
+"display": "standalone",
+"theme_color": "#ff9800"
+}

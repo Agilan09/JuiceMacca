@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Food Truck POS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <h1>🥤 Juice Macha</h1>
+        
+        <div id="drinks" class="grid-menu"></div>
+
+        <div class="order-panel">
+            <div class="controls">
+                <input type="number" id="qty" value="1" min="1">
+                <select id="paymentMethod">
+                    <option value="Cash">Cash</option>
+                    <option value="E-Wallet">E-Wallet</option>
+                </select>
+            </div>
+            <p id="summary">Select a drink...</p>
+        </div>
+
+        <hr>
+
+        <div class="report-section">
+            <h3>Daily Report</h3>
+            <input type="date" id="reportDate" onchange="fetchReport()">
+            <div class="stats">
+                <p>Total: <span id="dayTotal">$0.00</span></p>
+                <p>Best Seller: <span id="bestSeller">-</span></p>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
