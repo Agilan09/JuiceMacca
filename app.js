@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbwJ9BZc2oHQi62ZkI752h9mL5K6eorE52tsLmFqySj5J0KGcoetePbVeLWPWWNBlyag/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbypvM0KpK_xG2obNRN1VbBOqTC4sZpuvziHb9DeHM11Kp6Ryo9QsEh5fC04Ur-szFn7CA/exec';
 
 
 const drinks = [
@@ -54,5 +54,35 @@ async function addSale(drink) {
     } catch (error) {
         summary.innerHTML = "❌ Error! Check Connection.";
         summary.style.color = "red";
+    }
+}
+
+// 3. FETCH REPORT BY DATE
+async function fetchReport() {
+    const selectedDate = new Date(document.getElementById('reportDate').value).toLocaleDateString();
+    summary.innerHTML = "⏳ Loading report...";
+    
+    try {
+        const response = await fetch(API_URL);
+        const allSales = await response.json();
+
+        let dailyTotal = 0;
+        let itemCounts = {};
+
+        allSales.forEach(row => {
+            const saleDate = new Date(row[0]).toLocaleDateString();
+            if (saleDate === selectedDate) {
+                dailyTotal += row[4];
+                itemCounts[row[1]] = (itemCounts[row[1]] || 0) + row[3];
+            }
+        });
+
+        const topProduct = Object.keys(itemCounts).reduce((a, b) => itemCounts[a] > itemCounts[b] ? a : b, "None");
+
+        document.getElementById('dayTotal').innerText = `$${dailyTotal.toFixed(2)}`;
+        document.getElementById('bestSeller').innerText = topProduct;
+        summary.innerHTML = "Report Updated.";
+    } catch (e) {
+        summary.innerHTML = "Failed to load data.";
     }
 }

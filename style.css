@@ -14,4 +14,4 @@ h1 { text-align: center; color: #333; }
 input, select { padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
 
 #summary { font-weight: bold; font-size: 18px; }
-.stats { display: flex; justify-content: space-around; background: #e8f4fd; padding: 10px; border-radius: 10px; margin-top: 10px; }
+.stats { display: flex; justify-content: space-around; background: #e8f4fd; padding: 10px; border-radius: 10px; margin-top: 10px; } 
