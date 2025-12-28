@@ -2,13 +2,59 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwFtl7SeEic924SWdUKhhS-
 
 
 const drinks = [
+
+// Coconut Series
+    { id: 1, name: 'Original Coco', price: 5.00, category: 'coconut' },
+    { id: 2, name: 'Passion Coco', price: 6.00, category: 'coconut' },
+    { id: 3, name: 'Melon Coco', price: 6.00, category: 'coconut' },
+    { id: 4, name: 'Kiwi Coco', price: 6.00, category: 'coconut' },
+    { id: 5, name: 'Berry Coco', price: 6.00, category: 'coconut' },
+    { id: 6, name: 'Mango Coco', price: 6.00, category: 'coconut' },
+    { id: 7, name: 'Pine Coco', price: 6.00, category: 'coconut' },
+    { id: 8, name: 'Strawberry Coco', price: 6.00, category: 'coconut' },
+    { id: 9, name: 'Lychee Coco', price: 6.00, category: 'coconut' },
+    { id: 10, name: 'Grape Coco', price: 6.00, category: 'coconut' },
+
+    
+    // Sugarcane Series
+    { id: 11, name: 'Original Cane', price: 5.00, category: 'Sugarcane' },
+    { id: 12, name: 'Kiwi Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 13, name: 'Pine Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 14, name: 'Melon Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 15, name: 'Lychee Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 16, name: 'Mango Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 17, name: 'Berry Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 18, name: 'Strawberry Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 19, name: 'Passion Cane', price: 6.00, category: 'Sugarcane' },
+    { id: 20, name: 'Grape Cane', price: 6.00, category: 'Sugarcane' },
+
+    // Signature Drinks
+    { id: 9, name: 'Jiwang Coco', price: 8.00, category: 'Signature' },
+    { id: 10, name: 'Jiwang Cane', price: 8.00, category: 'Signature' },
+
+    // Cococnut Lassi
+    
+    { id: 21, name: 'Mango Lassi', price: 9.00, category: 'Lassi' },
+    { id: 22, name: 'Strawberry Lassi', price: 9.00, category: 'Lassi' },
+    { id: 23, name: 'Original Lassi', price: 9.00, category: 'Lassi' },
+
+    // Shakes
+    { id: 24, name: 'Original Shake', price: 10.00, category: 'Shake' },
+    { id: 25, name: 'B/S/M Shake', price: 11.00, category: 'Shake' },
+    { id: 26, name: 'Chocolate Coco Shake', price: 12.00, category: 'Shake' },
+   
+/*
 { id: 1, name: 'Original Coco', price: 5.00 },
 { id: 2, name: 'Coco Passion', price: 6.00 },
 { id: 3, name: 'Coco Melon', price: 6.00 },
 { id: 4, name: 'Coco Kiwi', price: 6.00 },
 { id: 5, name: 'Coco Berry', price: 6.00 },
-{ id: 6, name: 'Coco Mango', price: 6.00 }
-
+{ id: 6, name: 'Coco Mango', price: 6.00 },
+{ id: 7, name: 'Coco Pine', price: 6.00 },
+{ id: 8, name: 'Coco Strawberry', price: 7.00 },
+{ id: 9, name: 'Coco Lychee', price: 7.00 },
+{ id: 10, name: 'Coco Grape', price: 7.00 },
+*/
 ];
 
 let basket = []; // This holds the items for the current customer
@@ -30,11 +76,28 @@ const drinksDiv = document.getElementById('drinks');
 */
 
 drinks.forEach(d => {
+    /*
     const btn = document.createElement('button');
     btn.className = "drink-btn";
     btn.innerHTML = `${d.name}<br><strong>$${d.price.toFixed(2)}</strong>`;
     btn.onclick = () => addToBasket(d); // Changed from addSale to addToBasket
     drinksDiv.appendChild(btn);
+    */
+   const btn = document.createElement('button');
+    
+    // 1. Assign the shared class + the specific category color class
+    btn.className = `drink-btn btn-${d.category}`; 
+    
+    btn.innerHTML = `${d.name}<br>RM${d.price.toFixed(2)}`;
+    btn.onclick = () => addToBasket(d);
+
+    // 2. Find the specific container for this category
+    const container = document.getElementById(`${d.category}-series`);
+    
+    // 3. Put the button in that container
+    if (container) {
+        container.appendChild(btn);
+    }
 });
 
 

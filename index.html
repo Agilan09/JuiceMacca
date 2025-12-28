@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Food Truck POS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-</head>
-<body>
+ </head>
+ <body>
     <div class="container">
         <h1>🥤 Juice Macha</h1>
       
-  <div id="drinks" class="grid-menu"></div>
+  <div class="menu-container">
+    <div class="series-section">
+        <h3>🥥🌴 Coconut Series</h3>
+        <div id="coconut-series" class="grid-menu"></div>
+    </div>
+
+    <div class="series-section">
+        <h3>🎋 Cane Series</h3>
+        <div id="Sugarcane-series" class="grid-menu"></div>
+    </div>
+
+    <div class="series-section">
+        <h3>🍓 Signature Drinks</h3>
+        <div id="Signature-series" class="grid-menu"></div>
+    </div>
+
+        <div class="series-section">
+        <h3>🍓 Coconut Lassi</h3>
+        <div id="Lassi-series" class="grid-menu"></div>
+    </div>
+
+        <div class="series-section">
+        <h3>🥤 Shakes</h3>
+        <div id="Shake-series" class="grid-menu"></div>
+</div>
 
   <hr>
   <div class="qty-control">
@@ -52,5 +79,5 @@
         </div>
     </div>
     <script src="app.js"></script>
-</body>
-</html>
+ </body>
+ </html>
