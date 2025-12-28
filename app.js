@@ -79,7 +79,7 @@ async function fetchReport() {
 
         const topProduct = Object.keys(itemCounts).reduce((a, b) => itemCounts[a] > itemCounts[b] ? a : b, "None");
 
-        document.getElementById('dayTotal').innerText = `$${dailyTotal.toFixed(2)}`;
+        document.getElementById('dayTotal').innerText = `RM${dailyTotal.toFixed(2)}`;
         document.getElementById('bestSeller').innerText = topProduct;
         summary.innerHTML = "Report Updated.";
     } catch (e) {
