@@ -72,7 +72,7 @@ async function fetchReport() {
         allSales.forEach(row => {
             const saleDate = new Date(row[0]).toLocaleDateString();
             if (saleDate === selectedDate) {
-                dailyTotal += row[4];
+                dailyTotal += row[3];
                 itemCounts[row[1]] = (itemCounts[row[1]] || 0) + row[3];
             }
         });
