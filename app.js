@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbypvM0KpK_xG2obNRN1VbBOqTC4sZpuvziHb9DeHM11Kp6Ryo9QsEh5fC04Ur-szFn7CA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwFtl7SeEic924SWdUKhhS-cLS4bt4A-CZ9yneWqZxQsWTCDJ2YztUEw6zew7GJ24cW4A/exec';
 
 
 const drinks = [
@@ -11,23 +11,85 @@ const drinks = [
 
 ];
 
+let basket = []; // This holds the items for the current customer
 
 const drinksDiv = document.getElementById('drinks');
-const summary = document.getElementById('summary');
+//const summary = document.getElementById('summary');
+
+
 
 
 // 1. GENERATE MENU BUTTONS
-drinks.forEach(d => {
+/*drinks.forEach(d => {
     const btn = document.createElement('button');
     btn.className = "drink-btn";
     btn.innerHTML = `${d.name}<br><strong>$${d.price.toFixed(2)}</strong>`;
     btn.onclick = () => addSale(d);
     drinksDiv.appendChild(btn);
 });
+*/
+
+drinks.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = "drink-btn";
+    btn.innerHTML = `${d.name}<br><strong>$${d.price.toFixed(2)}</strong>`;
+    btn.onclick = () => addToBasket(d); // Changed from addSale to addToBasket
+    drinksDiv.appendChild(btn);
+});
+
+
+// 2. ADD TO BASKET (Local only, doesn't send to Google yet)
+function addToBasket(drink) {
+    const qtyInput = document.getElementById('qty').value;
+    const qty = parseInt(qtyInput) || 1;
+    
+    // Add the item to our list
+    basket.push({
+        id: drink.id,
+        name: drink.name,
+        price: drink.price,
+        quantity: qty,
+        total: drink.price * qty
+    });
+
+    renderBasket();
+    //document.getElementById('qty').value = 1; // Reset quantity box to 1
+    qtyInput.value = 1; // Reset to 1
+}
+
+// 3. SHOW BASKET ON SCREEN
+function renderBasket() {
+    const list = document.getElementById('basketList');
+    const totalDisplay = document.getElementById('basketTotal');
+    list.innerHTML = ""; // Clear current display
+    
+    let grandTotal = 0;
+
+    if (basket.length === 0) {
+        list.innerHTML = '<li style="color: gray;">Basket is empty</li>';
+    } else {
+        basket.forEach((item, index) => {
+            grandTotal += item.total;
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${item.quantity}x ${item.name} - RM${item.total.toFixed(2)}
+                <button onclick="removeFromBasket(${index})">❌</button>`;
+            list.appendChild(li);
+        });
+    }
+    
+    totalDisplay.innerText = `RM${grandTotal.toFixed(2)}`;
+}
+
+// 4. REMOVE ITEM (If you make a mistake)
+function removeFromBasket(index) {
+    basket.splice(index, 1);
+    renderBasket();
+}
 
 
 // 2. SAVE SALE (ASYNC/AWAIT)
-async function addSale(drink) {
+/*async function addSale(drink) {
     const qty = parseInt(document.getElementById('qty').value);
     const payment = document.getElementById('paymentMethod').value;
     const total = drink.price * qty;
@@ -55,7 +117,80 @@ async function addSale(drink) {
         summary.innerHTML = "❌ Error! Check Connection.";
         summary.style.color = "red";
     }
+}*/
+
+// 5. SUBMIT ORDER TO GOOGLE SHEETS
+/*async function submitOrder() {
+    if (basket.length === 0) {
+        alert("Please add drinks to the basket first!");
+        return;
+    }
+
+    const payment = document.getElementById('paymentMethod').value;
+    const summary = document.getElementById('summary');
+    const submitBtn = document.getElementById('submitBtn');
+
+    summary.innerHTML = "⏳ Sending Order...";
+    submitBtn.disabled = true; // Prevent double clicking
+
+    try {
+        // We send each item in the basket to your Google Sheet
+        for (const item of basket) {
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    drink_name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    total: item.total,
+                    payment: payment
+                })
+            });
+        }
+
+        summary.innerHTML = `✅ Order Confirmed! Total: $${document.getElementById('basketTotal').innerText}`;
+        summary.style.color = "green";
+        
+        // Clear basket for next customer
+        basket = [];
+        renderBasket();
+    } catch (error) {
+        summary.innerHTML = "❌ Error! Check connection.";
+        summary.style.color = "red";
+    } finally {
+        submitBtn.disabled = false;
+    }
 }
+    */
+
+async function submitOrder() {
+    if (basket.length === 0) return;
+    
+    const summary = document.getElementById('summary');
+    summary.innerText = "⏳ Sending Order...";
+
+    try {
+        // ONE fetch for the WHOLE basket
+        await fetch(API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                items: basket, // Send the full list
+                payment: document.getElementById('paymentMethod').value
+            })
+        });
+
+        basket = [];
+        renderBasket();
+        summary.innerText = "✅ Order Saved !";
+    } catch (e) {
+        summary.innerText = "❌ Error! Try again.";
+    }
+}
+
+
+
 
 // 3. FETCH REPORT BY DATE
 async function fetchReport() {
@@ -72,8 +207,8 @@ async function fetchReport() {
         allSales.forEach(row => {
             const saleDate = new Date(row[0]).toLocaleDateString();
             if (saleDate === selectedDate) {
-                dailyTotal += row[3];
-                itemCounts[row[1]] = (itemCounts[row[1]] || 0) + row[3];
+                dailyTotal += row[5];
+                itemCounts[row[2]] = (itemCounts[row[2]] || 0) + row[4];
             }
         });
 

@@ -14,4 +14,41 @@ h1 { text-align: center; color: #333; }
 input, select { padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
 
 #summary { font-weight: bold; font-size: 18px; }
-.stats { display: flex; justify-content: space-around; background: #e8f4fd; padding: 10px; border-radius: 10px; margin-top: 10px; } 
+.stats { display: flex; justify-content: space-around; background: #e8f4fd; padding: 10px; border-radius: 10px; margin-top: 10px; }
+
+.basket-container {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#basketList {
+    list-style: none;
+    padding: 0;
+}
+
+#basketList li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-section {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    flex-grow: 1;
+    cursor: pointer;
+}

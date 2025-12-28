@@ -11,19 +11,34 @@
 <body>
     <div class="container">
         <h1>🥤 Juice Macha</h1>
-        
-        <div id="drinks" class="grid-menu"></div>
+      
+  <div id="drinks" class="grid-menu"></div>
 
-        <div class="order-panel">
-            <div class="controls">
-                <input type="number" id="qty" value="1" min="1">
-                <select id="paymentMethod">
-                    <option value="Cash">Cash</option>
-                    <option value="E-Wallet">E-Wallet</option>
-                </select>
-            </div>
-            <p id="summary">Select a drink...</p>
-        </div>
+  <hr>
+  <div class="qty-control">
+        <label>Quantity:</label>
+        <input type="number" id="qty" value="1" min="1">
+    </div>
+
+ <div class="basket-container">
+    <h3>🛒 Current Order</h3>
+    <ul id="basketList">
+        <li style="color: gray;">Basket is empty</li>
+    </ul>
+    <div class="basket-total">
+        <strong>Total: <span id="basketTotal">RM 0.00</span></strong>
+    </div>
+
+    <div class="submit-section">
+        <select id="paymentMethod">
+            <option value="Cash">Cash</option>
+            <option value="E-Wallet">E-Wallet</option>
+        </select>
+        <button id="submitBtn" onclick="submitOrder()" class="submit-btn">Submit Order</button>
+    </div>
+ </div>
+
+   <div id="summary"></div>
 
         <hr>
 
